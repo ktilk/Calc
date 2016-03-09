@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -82,4 +83,10 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         if (BuildConfig.DEBUG) { Log.d(TAG, "onDestroy called"); }
     }// The activity is about to be destroyed.    }
+
+    public void buttonClicked(View view) {
+        /*switch (view.getId()){
+            case R.id.
+        }*/
+    }
 }
