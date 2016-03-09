@@ -34,6 +34,7 @@
 
         <Button
             android:id="@+id/buttonClear"
+            android:onClick="buttonClicked"
             android:text="Clear"
             style="@style/button_calc"
             app:layout_heightPercent="15%"
@@ -44,6 +45,7 @@
             style="@style/button_calc"
             android:layout_alignTop="@id/buttonClear"
             android:layout_toRightOf="@id/buttonClear"
+            android:onClick="buttonClicked"
             android:text="/"
             app:layout_heightPercent="15%"
             app:layout_widthPercent="25%" />
@@ -53,6 +55,7 @@
             style="@style/button_calc"
             android:layout_alignTop="@id/buttonClear"
             android:layout_toRightOf="@id/buttonDivide"
+            android:onClick="buttonClicked"
             android:text="*"
             app:layout_heightPercent="15%"
             app:layout_widthPercent="25%" />
@@ -61,6 +64,7 @@
             android:id="@+id/button7"
             style="@style/button_calc"
             android:layout_below="@id/buttonClear"
+            android:onClick="buttonClicked"
             android:text="7"
             app:layout_heightPercent="20%"
             app:layout_widthPercent="25%" />
@@ -70,6 +74,7 @@
             style="@style/button_calc"
             android:layout_alignTop="@id/button7"
             android:layout_toRightOf="@id/button7"
+            android:onClick="buttonClicked"
             android:text="8"
             app:layout_heightPercent="20%"
             app:layout_widthPercent="25%" />

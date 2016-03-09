@@ -85,6 +85,13 @@ public class MainActivity extends AppCompatActivity {
     }// The activity is about to be destroyed.    }
 
     public void buttonClicked(View view) {
+        String subName = "com.example.kaspar.calc:id/button";
+        Button btn = (Button) view;
+        String idAsString = btn.getResources().getResourceName(btn.getId());
+        String buttonSuffix = idAsString.substring(subName.length());
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "button pressed: " + buttonSuffix);
+        }
         /*switch (view.getId()){
             case R.id.
         }*/
