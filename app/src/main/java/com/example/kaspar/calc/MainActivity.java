@@ -5,18 +5,21 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
-
+    private static final String TAG = "MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (BuildConfig.DEBUG) { Log.d(TAG, "onCreate called"); }
+
         setContentView(R.layout.activity_main);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -34,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        //savedInstanceState.putString();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -43,10 +50,36 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_exit) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (BuildConfig.DEBUG) { Log.d(TAG, "onStart called"); }
+    }// The activity is about to become visible.
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (BuildConfig.DEBUG) { Log.d(TAG, "onResume called"); }
+    }// The activity has become visible (it is now "resumed").   
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (BuildConfig.DEBUG) { Log.d(TAG, "onPause called"); }
+        // Another activity is taking focus (this activity is about to be "paused").   
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (BuildConfig.DEBUG) { Log.d(TAG, "onStop called"); }
+    }// The activity is no longer visible (it is now "stopped")    }   
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (BuildConfig.DEBUG) { Log.d(TAG, "onDestroy called"); }
+    }// The activity is about to be destroyed.    }
 }
