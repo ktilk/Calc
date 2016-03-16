@@ -1,314 +1,145 @@
 package com.example.kaspar.calc;
 
+import android.widget.TextView;
+
 /**
  * Created by Kaspar on 9.03.2016.
  */
 public class CalcEngine {
     private static final String TAG = "CalcEngine";
-
-    private String calcState = "";
-    private String dispText = "";
-    private String op1 = "";
+    
+    private String dispText = "0";
+    private String op1 = "0";
     private String op2 = "";
     private String optr = "";
 
-    public String getOptr(){
-        return optr;
-    }
-    public void setOptr(String s) {
+
+    public void changeOperator(String s) {
         optr = s;
+        if (op2.equals("")){
+            op1 = dispText;
+        }
     }
-    public String getOp2(){
-        return op2;
+
+    public void calculate() {
+        switch (optr) {
+            case "+":
+                op1 = add();
+                break;
+            case "-":
+                op1 = substract();
+                break;
+            case "*":
+                op1 = multiply();
+                break;
+            case "/":
+                op1 = divide();
+                break;
+        }
+        dispText = op1;
+        op2 = "";
+        optr = "";
     }
-    public void setOp2(String s) {
-        op2 = s;
+
+    public void clear() {
+        dispText = "0";
+        op1 = "0";
+        op2 = "";
+        optr = "";
     }
-    public String getOp1(){
-        return op1;
+
+    public void addComma() {
+        if (optr.equals("")){
+            if (!op1.contains(".")){
+                op1 += ".";
+                dispText = op1;
+            }
+        }else {
+            if (!op2.contains(".")){
+                op2 += ".";
+                dispText = op2;
+            }
+        }
     }
-    public void setOp1(String s) {
-        op1 = s;
+
+    public void addNumber(String s) {
+        if (optr.equals("")){ // kui operaatorit pole, siis sisestatakse esimest arvu
+            if (op1.equals("0")){
+                if (!s.equals("0")){
+                    op1 = s;
+                }
+            }else {
+                op1 += s;
+            }
+            dispText = op1;
+        }else{ // kui operaator on olemas, siis sisestatakse teist arvu
+            if (op2.equals("")){
+                op2 = s;
+            }else if (Double.parseDouble(op2)==0){
+                if (!s.equals("0")){
+                    op2 = s;
+                }
+            }else {
+                op2 += s;
+            }
+            dispText = op2;
+        }
     }
-    public String getState(){
-        return calcState;
+
+    public String getDisplayText() {
+        if (op2.equals("")){ // kui teist arvu veel pole
+            return dispText + optr;
+        }else { //kui sisestatakse teist arvu
+            return dispText;
+        }
     }
-    public void setCalcState(String s) {
-        calcState = s;
+
+    public String add() {
+        return "" + (Double.parseDouble(op1) + Double.parseDouble(op2));
     }
+
+    public String substract() {
+        return "" + (Double.parseDouble(op1) - Double.parseDouble(op2));
+    }
+    public String multiply() {
+        return "" + (Double.parseDouble(op1) * Double.parseDouble(op2));
+    }
+    public String divide() {
+        if (Double.parseDouble(op2)==0){
+            return "Error";
+        }
+        return "" + (Double.parseDouble(op1) / Double.parseDouble(op2));
+    }
+    // Getters and setters
+    public void setDisp(String disp) {
+        this.dispText = disp;
+    }
+
+    public void setOp1(String op1) {
+        this.op1 = op1;
+    }
+
+    public void setOp2(String op2) {
+        this.op2 = op2;
+    }
+
+    public void setOptr(String optr) {
+        this.optr = optr;
+    }
+
     public String getDisp() {
         return dispText;
     }
-    public void setDisp(String disp) {
-        dispText = disp;
+
+    public String getOp1() {
+        return op1;
     }
 
-    public void handleInput(int s) {
-        switch (s) {
-            case R.id.button0:
-                if (!op2.isEmpty()) {
-                    op2 = "";
-                    dispText = "";
-                }
-                calcState += "0";
-                dispText = calcState;
-                break;
-            case R.id.button1:
-                if (!op2.isEmpty()) {
-                    op2 = "";
-                    dispText = "";
-                }
-                calcState += "1";
-                dispText = calcState;
-                break;
-            case R.id.button2:
-                if (!op2.isEmpty()) {
-                    op2 = "";
-                    dispText = "";
-                }
-                calcState += "2";
-                dispText = calcState;
-                break;
-            case R.id.button3:
-                if (!op2.isEmpty()) {
-                    op2 = "";
-                    dispText = "";
-                }
-                calcState += "3";
-                dispText = calcState;
-                break;
-            case R.id.button4:
-                if (!op2.isEmpty()) {
-                    op2 = "";
-                    dispText = "";
-                }
-                calcState += "4";
-                dispText = calcState;
-                break;
-            case R.id.button5:
-                if (!op2.isEmpty()) {
-                    op2 = "";
-                    dispText = "";
-                }
-                calcState += "5";
-                dispText = calcState;
-                break;
-            case R.id.button6:
-                if (!op2.isEmpty()) {
-                    op2 = "";
-                    dispText = "";
-                }
-                calcState += "6";
-                dispText = calcState;
-                break;
-            case R.id.button7:
-                if (!op2.isEmpty()) {
-                    op2 = "";
-                    dispText = "";
-                }
-                calcState += "7";
-                dispText = calcState;
-                break;
-            case R.id.button8:
-                if (!op2.isEmpty()) {
-                    op2 = "";
-                    dispText = "";
-                }
-                calcState += "8";
-                dispText = calcState;
-                break;
-            case R.id.button9:
-                if (!op2.isEmpty()) {
-                    op2 = "";
-                    dispText = "";
-                }
-                calcState += "9";
-                dispText = calcState;
-                break;
-            case R.id.buttonAdd:
-                optr = "+";
-                if (op1.isEmpty()) {
-                    op1 = dispText;
-                    dispText="";
-                    calcState="";
-                } else if (!op2.isEmpty()) {
-                    op2 = "";
-                    dispText="";
-                    calcState="";
-                } else {
-                    op2 = calcState;
-                    dispText="";
-                    op1 = add(op1, op2);
-                    dispText=op1;
-                }
-                break;
-            case R.id.buttonSubstract:
-                optr = "-";
-                if (op1.isEmpty()) {
-                    op1 = dispText;
-                    dispText="";
-                    calcState="";
-                } else if (!op2.isEmpty()) {
-                    op2 = "";
-                    dispText="";
-                    calcState="";
-                } else {
-                    op2 = calcState;
-                    dispText="";
-                    op1 = substract(op1, op2);
-                    dispText=op1;
-                }
-                break;
-            case R.id.buttonMultiply:
-                optr = "*";
-                if (op1.isEmpty()) {
-                    op1 = dispText;
-                    dispText="";
-                    calcState="";
-                } else if (!op2.isEmpty()) {
-                    op2 = "";
-                    dispText="";
-                    calcState="";
-                } else {
-                    op2 = calcState;
-                    dispText="";
-                    op1 = multiply(op1, op2);
-                    dispText=op1;
-                }
-                break;
-            case R.id.buttonDivide:
-                optr = "/";
-                if (op1.isEmpty()) {
-                    op1 = dispText;
-                    dispText="";
-                    calcState="";
-                } else if (!op2.isEmpty()) {
-                    op2 = "";
-                    dispText="";
-                    calcState="";
-                } else {
-                    op2 = calcState;
-                    dispText="";
-                    op1 = divide(op1, op2);
-                    dispText=op1;
-                }
-                break;
-            case R.id.buttonComma:
-                if (!calcState.contains(".")){
-                    if (!op2.isEmpty()) {
-                        op2 = "";
-                        dispText = "";
-                    }
-                    calcState += ".";
-                    dispText = calcState;
-                    break;
-                }
-                break;
-            case R.id.buttonClear:
-                op1 = "";
-                op2 = "";
-                calcState = "";
-                dispText = "";
-                break;
-            case R.id.buttonEquals:
-                if(!optr.equals(null)){
-                    if(!op2.isEmpty()){
-                        if(optr.equals("+")){
-                            dispText="";
-                            op1 = add(op1, op2);
-                            dispText=op1;
-                        }
-                        else if(optr.equals("-")){
-                            dispText="";
-							op1 = substract(op1, op2);
-                            dispText=op1;
-                        }
-                        else if(optr.equals("*")){
-                            dispText="";
-							op1 = multiply(op1, op2);
-                            dispText=op1;
-                        }
-                        else if(optr.equals("/")){
-                            dispText="";
-							op1 = divide(op1, op2);
-                            dispText=op1;
-                        }
-                    }
-                    else{
-                        operation();
-                    }
-                }
-                break;
-        }
-    }
-    public void operation(){
-        if(optr.equals("+")){
-            op2 = dispText;
-            dispText="";
-            op1 = add(op1, op2);
-            dispText=op1;
-        }
-        else if(optr.equals("-")){
-            op2 = dispText;
-            dispText="";
-            op1 = substract(op1, op2);
-            dispText=op1;
-        }
-        else if(optr.equals("*")){
-            op2 = dispText;
-            dispText="";
-            op1 = multiply(op1, op2);
-            dispText=op1;
-        }
-        else if(optr.equals("/")){
-            op2 = dispText;
-            dispText="";
-            op1 = divide(op1, op2);
-            dispText=op1;
-        }
+    public String getOp2() {
+        return op2;
     }
 
-
-    public void addToState(String s) {
-        calcState += s;
+    public String getOptr() {
+        return optr;
     }
-
-/*    public void calculate(String s) {
-        String[] operands = new String[2];
-        if (s.contains("+")) {
-            operands = s.split("\\+");
-            calcState = add(Double.parseDouble(operands[0]), Double.parseDouble(operands[1]));
-        }
-        if (s.contains("-")) {
-            operands = s.split("-");
-            calcState = substract(Double.parseDouble(operands[0]), Double.parseDouble(operands[1]));
-        }
-        if (s.contains("*")) {
-            operands = s.split("\\*");
-            calcState = multiply(Double.parseDouble(operands[0]), Double.parseDouble(operands[1]));
-        }
-        if (s.contains("/")) {
-            operands = s.split("/");
-            if (Double.parseDouble(operands[1]) != 0) {
-            }
-            calcState = divide(Double.parseDouble(operands[0]), Double.parseDouble(operands[1]));
-        }
-    }*/
-
-    public String add(String a, String b) {
-        return String.valueOf(Double.parseDouble(a) + Double.parseDouble(b));
-    }
-
-    public String substract(String a, String b) {
-        return String.valueOf(Double.parseDouble(a) - Double.parseDouble(b));
-    }
-
-    public String multiply(String a, String b) {
-        return String.valueOf(Double.parseDouble(a) * Double.parseDouble(b));
-    }
-
-    public String divide(String a, String b) {
-        return String.valueOf(Double.parseDouble(a) / Double.parseDouble(b));
-    }
-
 }
