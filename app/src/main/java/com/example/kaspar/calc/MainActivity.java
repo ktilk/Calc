@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btnComma;
     private Button btnClear;
     private Button btnEqual;
+
+    private UOW uow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +102,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             calc.setOptr(savedInstanceState.getString(STATE_OPTR));
         }
         drawDisplay();
+
+        uow = new UOW(getApplicationContext());
+
+        initListView();
+    }
+
+    private void initListView(){
+        OperandsAdapter operandsAdapter = new OperandsAdapter(getApplicationContext(), , uow)
+        ListView listView = (ListView) findViewById(android.R.id.list);
+        listView.setAdapter(operandsAdapter);
     }
 
     @Override
